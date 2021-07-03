@@ -18,7 +18,7 @@ if (MSVC)
     )
 else ()
     target_compile_options(bulk PUBLIC
-        -Wall -Wextra -pedantic -Werror
+        -Wall -Wextra -pedantic -Werror -pthread
     )
 endif()
 
