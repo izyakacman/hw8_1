@@ -9,21 +9,22 @@ else ()
     project ("bulk")
 endif()
 
-if (MSVC)
-else ()
+if (UNIX)
     find_package (Threads)
 endif()
 
 # Добавьте источник в исполняемый файл этого проекта.
 add_executable (bulk "main.cpp" "command.cpp" "thread.cpp")
 
+if (UNIX)
+    target_link_libraries (bulk Threads::Threads)
+endif()
+
 if (MSVC)
     target_compile_options(bulk PUBLIC
         /W4
     )
 else ()
-
-    target_link_libraries (bulk Threads::Threads)
 
     target_compile_options(bulk PUBLIC
         -Wall -Wextra -pedantic -Werror
