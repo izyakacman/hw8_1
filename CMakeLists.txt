@@ -3,7 +3,11 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-project ("bulk" VERSION 0.0.$ENV{GITHUB_RUN_NUMBER})
+if(DEFINED ENV{GITHUB_RUN_NUMBER})
+    project ("bulk" VERSION 0.0.$ENV{GITHUB_RUN_NUMBER})
+else ()
+    project ("bulk")
+endif()
 
 # Добавьте источник в исполняемый файл этого проекта.
 add_executable (bulk "main.cpp" "command.cpp" "thread.cpp")
