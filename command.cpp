@@ -72,7 +72,7 @@ ICommandHandlerPtr DynamicCommandHandler::ProcessCommand(Command* cmd, const std
 	return nullptr;
 }
 
-Command::Command(size_t count) : count_{ count }
+Command::Command(size_t count) : count_{ count }, stop_flag_{true}
 {
 	handler_ = ICommandHandlerPtr{ new StaticCommandHandler(count_) };
 
