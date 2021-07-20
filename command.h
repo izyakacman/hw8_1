@@ -8,6 +8,7 @@
 #include <thread>
 #include <mutex>
 #include <queue>
+#include <atomic>
 
 #include "writer.h"
 
@@ -85,7 +86,7 @@ private:
 	std::mutex ThreadFileMutex;
 	std::queue<std::string> stringsQueueCout;
 	std::queue<std::pair<std::string, long long>> stringsQueueFile;
-	std::atomic<bool> stop_flag_;
+	std::atomic<bool> stop_flag_ = true;
 };
 
 /**
