@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void CoutWriterThr(queue<string>& stringQueue, mutex& threadMutex, bool& bStopFlag)
+void CoutWriterThr(queue<string>& stringQueue, mutex& threadMutex, atomic<bool>& bStopFlag)
 {
 	CoutWriter writer;
 
@@ -20,7 +20,7 @@ void CoutWriterThr(queue<string>& stringQueue, mutex& threadMutex, bool& bStopFl
 	} // while (bStopFlag)
 }
 
-void FileWriterThr(std::queue<std::pair<std::string, long long>>& stringQueue, std::mutex& threadMutex, bool& bStopFlag, int postfix)
+void FileWriterThr(std::queue<std::pair<std::string, long long>>& stringQueue, std::mutex& threadMutex, atomic<bool>& bStopFlag, int postfix)
 {
 	FileWriter writer;
 

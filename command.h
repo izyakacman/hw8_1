@@ -85,7 +85,7 @@ private:
 	std::mutex ThreadFileMutex;
 	std::queue<std::string> stringsQueueCout;
 	std::queue<std::pair<std::string, long long>> stringsQueueFile;
-	bool stop_flag_ = true;
+	std::atomic<bool> stop_flag_ = true;
 };
 
 /**
