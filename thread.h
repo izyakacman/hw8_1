@@ -3,6 +3,7 @@
 #include <string>
 #include <mutex>
 #include <queue>
+#include <atomic>
 
 /**
 *	Console writer thread
