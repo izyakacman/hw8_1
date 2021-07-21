@@ -70,15 +70,17 @@ $(function() {
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;queue&gt;</code><br />
+<code>#include &lt;atomic&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for thread.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="thread_8h__incl.png" border="0" usemap="#athread_8h" alt=""/></div>
 <map name="athread_8h" id="athread_8h">
-<area shape="rect" title=" " alt="" coords="79,5,147,32"/>
+<area shape="rect" title=" " alt="" coords="119,5,187,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,60,107"/>
 <area shape="rect" title=" " alt="" coords="84,80,141,107"/>
 <area shape="rect" title=" " alt="" coords="165,80,223,107"/>
+<area shape="rect" title=" " alt="" coords="247,80,309,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -96,14 +98,14 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0973b3d76308f65f60108ccb0c09278d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a0973b3d76308f65f60108ccb0c09278d">CoutWriterThr</a> (std::queue&lt; std::string &gt; &amp;stringQueue, std::mutex &amp;threadMutex, bool &amp;bStopFlag)</td></tr>
-<tr class="separator:a0973b3d76308f65f60108ccb0c09278d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7375eda5f4a5f720680d5d5bfc101c42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a7375eda5f4a5f720680d5d5bfc101c42">FileWriterThr</a> (std::queue&lt; std::pair&lt; std::string, long long &gt;&gt; &amp;stringQueue, std::mutex &amp;threadMutex, bool &amp;bStopFlag, int postfix)</td></tr>
-<tr class="separator:a7375eda5f4a5f720680d5d5bfc101c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd03dae6d5196327981d58eb6abf2486"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#acd03dae6d5196327981d58eb6abf2486">CoutWriterThr</a> (std::queue&lt; std::string &gt; &amp;stringQueue, std::mutex &amp;threadMutex, std::atomic&lt; bool &gt; &amp;bStopFlag)</td></tr>
+<tr class="separator:acd03dae6d5196327981d58eb6abf2486"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8218f32a3e4907068207a2d26fb0700b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a8218f32a3e4907068207a2d26fb0700b">FileWriterThr</a> (std::queue&lt; std::pair&lt; std::string, long long &gt;&gt; &amp;stringQueue, std::mutex &amp;threadMutex, std::atomic&lt; bool &gt; &amp;bStopFlag, int postfix)</td></tr>
+<tr class="separator:a8218f32a3e4907068207a2d26fb0700b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a0973b3d76308f65f60108ccb0c09278d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0973b3d76308f65f60108ccb0c09278d">&#9670;&nbsp;</a></span>CoutWriterThr()</h2>
+<a id="acd03dae6d5196327981d58eb6abf2486"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd03dae6d5196327981d58eb6abf2486">&#9670;&nbsp;</a></span>CoutWriterThr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -123,7 +125,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramtype">std::atomic&lt; bool &gt; &amp;&#160;</td>
           <td class="paramname"><em>bStopFlag</em>&#160;</td>
         </tr>
         <tr>
@@ -137,8 +139,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7375eda5f4a5f720680d5d5bfc101c42"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7375eda5f4a5f720680d5d5bfc101c42">&#9670;&nbsp;</a></span>FileWriterThr()</h2>
+<a id="a8218f32a3e4907068207a2d26fb0700b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8218f32a3e4907068207a2d26fb0700b">&#9670;&nbsp;</a></span>FileWriterThr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -158,7 +160,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramtype">std::atomic&lt; bool &gt; &amp;&#160;</td>
           <td class="paramname"><em>bStopFlag</em>, </td>
         </tr>
         <tr>
