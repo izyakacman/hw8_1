@@ -8,7 +8,7 @@ using namespace std;
 /**
 *	Process command int the static mode
 */
-ICommandHandlerPtr StaticCommandHandler::ProcessCommand(Command* cmd, const std::string& s, bool& exit)
+ICommandHandlerPtr StaticCommandHandler::ProcessCommand(CommandsProcessor* cmd, const std::string& s, bool& exit)
 {
 	exit = true;
 
@@ -40,7 +40,7 @@ ICommandHandlerPtr StaticCommandHandler::ProcessCommand(Command* cmd, const std:
 /**
 *	Process command int the dynamic mode
 */
-ICommandHandlerPtr DynamicCommandHandler::ProcessCommand(Command* cmd, const std::string& s, bool& exit)
+ICommandHandlerPtr DynamicCommandHandler::ProcessCommand(CommandsProcessor* cmd, const std::string& s, bool& exit)
 {
 	exit = true;
 
@@ -72,7 +72,7 @@ ICommandHandlerPtr DynamicCommandHandler::ProcessCommand(Command* cmd, const std
 	return nullptr;
 }
 
-Command::Command(size_t count) : count_{ count }
+CommandsProcessor::CommandsProcessor(size_t count) : count_{ count }
 {
 	handler_ = ICommandHandlerPtr{ new StaticCommandHandler(count_) };
 
@@ -81,7 +81,7 @@ Command::Command(size_t count) : count_{ count }
 	file_thr2 = thread(FileWriterThr, ref(stringsQueueFile), ref(ThreadFileMutex), ref(stop_flag_), 2);
 }
 
-Command::~Command()
+CommandsProcessor::~CommandsProcessor()
 {
 	stop_flag_ = false;
 	cout_thr.join();
@@ -92,7 +92,7 @@ Command::~Command()
 /**
 *	Add command int the block
 */
-void Command::PushPool(const std::string& s)
+void CommandsProcessor::PushPool(const std::string& s)
 {
 	if (pool_.size() == 0)
 	{
@@ -105,7 +105,7 @@ void Command::PushPool(const std::string& s)
 /**
 *	Output string
 */
-void Command::PrintString(const std::string& s)
+void CommandsProcessor::PrintString(const std::string& s)
 {
 	{
 		lock_guard<std::mutex> guard(ThreadCoutMutex);
@@ -120,7 +120,7 @@ void Command::PrintString(const std::string& s)
 /**
 *	Output block of commands
 */
-void Command::PrintPool()
+void CommandsProcessor::PrintPool()
 {
 	CoutWriter coutWriter;
 

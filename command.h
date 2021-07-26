@@ -12,7 +12,7 @@
 
 #include "writer.h"
 
-class Command;
+class CommandsProcessor;
 constexpr auto EndOfFileString = "eof";
 
 class ICommandHandler;
@@ -29,7 +29,7 @@ public:
 	explicit ICommandHandler(size_t count) : count_{ count } {}
 	virtual ~ICommandHandler() = default;
 
-    virtual ICommandHandlerPtr ProcessCommand(Command*, const std::string&, bool& exit) = 0;
+    virtual ICommandHandlerPtr ProcessCommand(CommandsProcessor*, const std::string&, bool& exit) = 0;
 
 protected:
 
@@ -37,14 +37,14 @@ protected:
 };
 
 /**
-*	Process command
+*	Process commands
 */
-class Command
+class CommandsProcessor
 {
 public:
 
-	explicit Command(size_t count);
-	~Command();
+	explicit CommandsProcessor(size_t count);
+	~CommandsProcessor();
 
 	void PushPool(const std::string& s);
 
@@ -100,7 +100,7 @@ public:
 	StaticCommandHandler(size_t count) : ICommandHandler(count) {}
 	~StaticCommandHandler() = default;
 
-	ICommandHandlerPtr ProcessCommand(Command* cmd, const std::string& s, bool& exit) override;
+	ICommandHandlerPtr ProcessCommand(CommandsProcessor* cmd, const std::string& s, bool& exit) override;
 };
 
 /**
@@ -114,7 +114,7 @@ public:
 	DynamicCommandHandler(size_t count) : ICommandHandler(count) {}
 	~DynamicCommandHandler() = default;
 
-	ICommandHandlerPtr ProcessCommand(Command* cmd, const std::string& s, bool& exit) override;
+	ICommandHandlerPtr ProcessCommand(CommandsProcessor* cmd, const std::string& s, bool& exit) override;
 
 private:
 

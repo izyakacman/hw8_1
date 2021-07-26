@@ -14,7 +14,7 @@ int main(int argn, char** argc)
 	}
 
 	string s;
-	Command cmd{ static_cast<size_t>(atoll(argc[1])) };
+	CommandsProcessor cmd{ static_cast<size_t>(atoll(argc[1])) };
 
 	while (cin >> s)
 	{
