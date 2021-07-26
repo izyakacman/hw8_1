@@ -7,42 +7,34 @@ void CoutWriterThr(queue<string>& stringQueue, mutex& threadMutex, atomic<bool>&
 {
 	CoutWriter writer;
 
-	while (bStopFlag)
+	while (true)
 	{
 		std::unique_lock<mutex> lock( threadMutex );
 
-		cv.wait( lock, [&stringQueue] { return !stringQueue.empty(); });
-
-		writer.Print(move(stringQueue.front()));
-		stringQueue.pop();
-	}
-
-	cout << "CoutWriterThr stop\n";
-
-/////////
-/*
-	while (bStopFlag)
-	{
-		lock_guard<std::mutex> guard(threadMutex);
+		cv.wait( lock, [&stringQueue, &bStopFlag] { return !stringQueue.empty() || !bStopFlag; });
 
 		if (!stringQueue.empty())
 		{
 			writer.Print(move(stringQueue.front()));
 			stringQueue.pop();
 		}
+	}
 
-	} // while (bStopFlag)
-*/	
+	cout << "CoutWriterThr stop\n";
+
+
 }
 
 void FileWriterThr(std::queue<std::pair<std::string, long long>>& stringQueue, std::mutex& threadMutex, atomic<bool>& bStopFlag,
-	int postfix, std::condition_variable& /*cv*/)
+	int postfix, std::condition_variable& cv)
 {
 	FileWriter writer;
 
-	while (bStopFlag)
+	while (true)
 	{
-		lock_guard<std::mutex> guard(threadMutex);
+		std::unique_lock<mutex> lock( threadMutex );
+
+		cv.wait( lock, [&stringQueue, &bStopFlag] { return !stringQueue.empty() || !bStopFlag; });
 
 		if (!stringQueue.empty())
 		{

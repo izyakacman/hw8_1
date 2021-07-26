@@ -84,6 +84,7 @@ CommandsProcessor::CommandsProcessor(size_t count) : count_{ count }
 CommandsProcessor::~CommandsProcessor()
 {
 	stop_flag_ = false;
+	cv_.notify_all();
 	cout_thr.join();
 	file_thr1.join();
 	file_thr2.join();
