@@ -76,9 +76,9 @@ CommandsProcessor::CommandsProcessor(size_t count) : count_{ count }
 {
 	handler_ = ICommandHandlerPtr{ new StaticCommandHandler(count_) };
 
-	cout_thr = thread(CoutWriterThr, ref(stringsQueueCout), ref(ThreadCoutMutex), ref(stop_flag_));
-	file_thr1 = thread(FileWriterThr, ref(stringsQueueFile), ref(ThreadFileMutex), ref(stop_flag_), 1);
-	file_thr2 = thread(FileWriterThr, ref(stringsQueueFile), ref(ThreadFileMutex), ref(stop_flag_), 2);
+	cout_thr = thread(CoutWriterThr, ref(stringsQueueCout), ref(ThreadCoutMutex), ref(stop_flag_), ref(cv_));
+	file_thr1 = thread(FileWriterThr, ref(stringsQueueFile), ref(ThreadFileMutex), ref(stop_flag_), 1, ref(cv_));
+	file_thr2 = thread(FileWriterThr, ref(stringsQueueFile), ref(ThreadFileMutex), ref(stop_flag_), 2, ref(cv_));
 }
 
 CommandsProcessor::~CommandsProcessor()

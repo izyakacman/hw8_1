@@ -3,10 +3,24 @@
 
 using namespace std;
 
-void CoutWriterThr(queue<string>& stringQueue, mutex& threadMutex, atomic<bool>& bStopFlag)
+void CoutWriterThr(queue<string>& stringQueue, mutex& threadMutex, atomic<bool>& bStopFlag, std::condition_variable& cv)
 {
 	CoutWriter writer;
 
+	while (bStopFlag)
+	{
+		std::unique_lock<mutex> lock( threadMutex );
+
+		cv.wait( lock, [&stringQueue] { return !stringQueue.empty(); });
+
+		writer.Print(move(stringQueue.front()));
+		stringQueue.pop();
+	}
+
+	cout << "CoutWriterThr stop\n";
+
+/////////
+/*
 	while (bStopFlag)
 	{
 		lock_guard<std::mutex> guard(threadMutex);
@@ -18,9 +32,11 @@ void CoutWriterThr(queue<string>& stringQueue, mutex& threadMutex, atomic<bool>&
 		}
 
 	} // while (bStopFlag)
+*/	
 }
 
-void FileWriterThr(std::queue<std::pair<std::string, long long>>& stringQueue, std::mutex& threadMutex, atomic<bool>& bStopFlag, int postfix)
+void FileWriterThr(std::queue<std::pair<std::string, long long>>& stringQueue, std::mutex& threadMutex, atomic<bool>& bStopFlag,
+	int postfix, std::condition_variable& /*cv*/)
 {
 	FileWriter writer;
 
@@ -37,4 +53,6 @@ void FileWriterThr(std::queue<std::pair<std::string, long long>>& stringQueue, s
 		}
 
 	} // while (bStopFlag)
+
+	cout << "FileWriterThr stop\n";
 }

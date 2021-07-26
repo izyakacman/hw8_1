@@ -9,6 +9,7 @@
 #include <mutex>
 #include <queue>
 #include <atomic>
+#include <condition_variable>
 
 #include "writer.h"
 
@@ -68,6 +69,8 @@ public:
 			handler_ = std::move(ptr);
 		}
 
+		cv_.notify_all();
+
 		return !res;
 	}
 
@@ -87,6 +90,7 @@ private:
 	std::queue<std::string> stringsQueueCout;
 	std::queue<std::pair<std::string, long long>> stringsQueueFile;
 	std::atomic<bool> stop_flag_ = true;
+	std::condition_variable cv_;
 };
 
 /**
