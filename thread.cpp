@@ -19,10 +19,6 @@ void CoutWriterThr(queue<string>& stringQueue, mutex& threadMutex, atomic<bool>&
 			stringQueue.pop();
 		}
 	}
-
-	cout << "CoutWriterThr stop\n";
-
-
 }
 
 void FileWriterThr(std::queue<std::pair<std::string, long long>>& stringQueue, std::mutex& threadMutex, atomic<bool>& bStopFlag,
@@ -45,6 +41,4 @@ void FileWriterThr(std::queue<std::pair<std::string, long long>>& stringQueue, s
 		}
 
 	} // while (bStopFlag)
-
-	cout << "FileWriterThr stop\n";
 }
