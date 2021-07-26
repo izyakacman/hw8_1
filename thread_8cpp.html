@@ -74,28 +74,29 @@ Include dependency graph for thread.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="thread_8cpp__incl.png" border="0" usemap="#athread_8cpp" alt=""/></div>
 <map name="athread_8cpp" id="athread_8cpp">
-<area shape="rect" title=" " alt="" coords="203,5,286,32"/>
-<area shape="rect" href="thread_8h.html" title=" " alt="" coords="165,80,233,107"/>
-<area shape="rect" href="writer_8h.html" title=" " alt="" coords="298,80,362,107"/>
-<area shape="rect" title=" " alt="" coords="255,155,309,181"/>
+<area shape="rect" title=" " alt="" coords="275,5,358,32"/>
+<area shape="rect" href="thread_8h.html" title=" " alt="" coords="225,80,293,107"/>
+<area shape="rect" href="writer_8h.html" title=" " alt="" coords="445,80,509,107"/>
+<area shape="rect" title=" " alt="" coords="405,155,460,181"/>
 <area shape="rect" title=" " alt="" coords="5,155,63,181"/>
 <area shape="rect" title=" " alt="" coords="87,155,144,181"/>
 <area shape="rect" title=" " alt="" coords="169,155,230,181"/>
-<area shape="rect" title=" " alt="" coords="334,155,406,181"/>
-<area shape="rect" title=" " alt="" coords="430,155,497,181"/>
+<area shape="rect" title=" " alt="" coords="255,155,381,181"/>
+<area shape="rect" title=" " alt="" coords="485,155,557,181"/>
+<area shape="rect" title=" " alt="" coords="581,155,647,181"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a46104fd44a0ac29fc5c79d32466e1c36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8cpp.html#a46104fd44a0ac29fc5c79d32466e1c36">CoutWriterThr</a> (queue&lt; string &gt; &amp;stringQueue, mutex &amp;threadMutex, atomic&lt; bool &gt; &amp;bStopFlag)</td></tr>
-<tr class="separator:a46104fd44a0ac29fc5c79d32466e1c36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3df8f948d0433de0d8c9d81c262000a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8cpp.html#a3df8f948d0433de0d8c9d81c262000a7">FileWriterThr</a> (std::queue&lt; std::pair&lt; std::string, long long &gt;&gt; &amp;stringQueue, std::mutex &amp;threadMutex, atomic&lt; bool &gt; &amp;bStopFlag, int postfix)</td></tr>
-<tr class="separator:a3df8f948d0433de0d8c9d81c262000a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa85cabb31aeceee00941fa259ee8d822"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8cpp.html#aa85cabb31aeceee00941fa259ee8d822">CoutWriterThr</a> (queue&lt; string &gt; &amp;stringQueue, mutex &amp;threadMutex, atomic&lt; bool &gt; &amp;bStopFlag, std::condition_variable &amp;cv)</td></tr>
+<tr class="separator:aa85cabb31aeceee00941fa259ee8d822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5f433d757536c99a1ed7fc4e605fb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8cpp.html#aae5f433d757536c99a1ed7fc4e605fb6">FileWriterThr</a> (std::queue&lt; std::pair&lt; std::string, long long &gt;&gt; &amp;stringQueue, std::mutex &amp;threadMutex, atomic&lt; bool &gt; &amp;bStopFlag, int postfix, std::condition_variable &amp;)</td></tr>
+<tr class="separator:aae5f433d757536c99a1ed7fc4e605fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a46104fd44a0ac29fc5c79d32466e1c36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46104fd44a0ac29fc5c79d32466e1c36">&#9670;&nbsp;</a></span>CoutWriterThr()</h2>
+<a id="aa85cabb31aeceee00941fa259ee8d822"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa85cabb31aeceee00941fa259ee8d822">&#9670;&nbsp;</a></span>CoutWriterThr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -116,7 +117,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">atomic&lt; bool &gt; &amp;&#160;</td>
-          <td class="paramname"><em>bStopFlag</em>&#160;</td>
+          <td class="paramname"><em>bStopFlag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::condition_variable &amp;&#160;</td>
+          <td class="paramname"><em>cv</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -128,8 +135,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3df8f948d0433de0d8c9d81c262000a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3df8f948d0433de0d8c9d81c262000a7">&#9670;&nbsp;</a></span>FileWriterThr()</h2>
+<a id="aae5f433d757536c99a1ed7fc4e605fb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae5f433d757536c99a1ed7fc4e605fb6">&#9670;&nbsp;</a></span>FileWriterThr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -156,7 +163,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>postfix</em>&#160;</td>
+          <td class="paramname"><em>postfix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::condition_variable &amp;&#160;</td>
+          <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>

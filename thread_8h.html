@@ -71,16 +71,18 @@ $(function() {
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;queue&gt;</code><br />
 <code>#include &lt;atomic&gt;</code><br />
+<code>#include &lt;condition_variable&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for thread.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="thread_8h__incl.png" border="0" usemap="#athread_8h" alt=""/></div>
 <map name="athread_8h" id="athread_8h">
-<area shape="rect" title=" " alt="" coords="119,5,187,32"/>
+<area shape="rect" title=" " alt="" coords="160,5,228,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,60,107"/>
 <area shape="rect" title=" " alt="" coords="84,80,141,107"/>
 <area shape="rect" title=" " alt="" coords="165,80,223,107"/>
 <area shape="rect" title=" " alt="" coords="247,80,309,107"/>
+<area shape="rect" title=" " alt="" coords="333,80,460,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -98,14 +100,14 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acd03dae6d5196327981d58eb6abf2486"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#acd03dae6d5196327981d58eb6abf2486">CoutWriterThr</a> (std::queue&lt; std::string &gt; &amp;stringQueue, std::mutex &amp;threadMutex, std::atomic&lt; bool &gt; &amp;bStopFlag)</td></tr>
-<tr class="separator:acd03dae6d5196327981d58eb6abf2486"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8218f32a3e4907068207a2d26fb0700b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a8218f32a3e4907068207a2d26fb0700b">FileWriterThr</a> (std::queue&lt; std::pair&lt; std::string, long long &gt;&gt; &amp;stringQueue, std::mutex &amp;threadMutex, std::atomic&lt; bool &gt; &amp;bStopFlag, int postfix)</td></tr>
-<tr class="separator:a8218f32a3e4907068207a2d26fb0700b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81b5befc276a48df8ba92624ff3762d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a81b5befc276a48df8ba92624ff3762d9">CoutWriterThr</a> (std::queue&lt; std::string &gt; &amp;stringQueue, std::mutex &amp;threadMutex, std::atomic&lt; bool &gt; &amp;bStopFlag, std::condition_variable &amp;cv)</td></tr>
+<tr class="separator:a81b5befc276a48df8ba92624ff3762d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a916dd7bcb1918b394764d9a5cd7456de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a916dd7bcb1918b394764d9a5cd7456de">FileWriterThr</a> (std::queue&lt; std::pair&lt; std::string, long long &gt;&gt; &amp;stringQueue, std::mutex &amp;threadMutex, std::atomic&lt; bool &gt; &amp;bStopFlag, int postfix, std::condition_variable &amp;cv)</td></tr>
+<tr class="separator:a916dd7bcb1918b394764d9a5cd7456de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="acd03dae6d5196327981d58eb6abf2486"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd03dae6d5196327981d58eb6abf2486">&#9670;&nbsp;</a></span>CoutWriterThr()</h2>
+<a id="a81b5befc276a48df8ba92624ff3762d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81b5befc276a48df8ba92624ff3762d9">&#9670;&nbsp;</a></span>CoutWriterThr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -126,7 +128,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::atomic&lt; bool &gt; &amp;&#160;</td>
-          <td class="paramname"><em>bStopFlag</em>&#160;</td>
+          <td class="paramname"><em>bStopFlag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::condition_variable &amp;&#160;</td>
+          <td class="paramname"><em>cv</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -139,8 +147,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8218f32a3e4907068207a2d26fb0700b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8218f32a3e4907068207a2d26fb0700b">&#9670;&nbsp;</a></span>FileWriterThr()</h2>
+<a id="a916dd7bcb1918b394764d9a5cd7456de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a916dd7bcb1918b394764d9a5cd7456de">&#9670;&nbsp;</a></span>FileWriterThr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -167,7 +175,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>postfix</em>&#160;</td>
+          <td class="paramname"><em>postfix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::condition_variable &amp;&#160;</td>
+          <td class="paramname"><em>cv</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
