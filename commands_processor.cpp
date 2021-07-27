@@ -1,76 +1,52 @@
-﻿#include "command.h"
-#include "thread.h"
+﻿#include "commands_processor.h"
+#include "writer.h"
 
 #include <chrono>
 
 using namespace std;
 
-/**
-*	Process command int the static mode
-*/
-ICommandHandlerPtr StaticCommandHandler::ProcessCommand(CommandsProcessor* cmd, const std::string& s, bool& exit)
+namespace {
+
+void CoutWriterThr(queue<string>& stringQueue, mutex& threadMutex, std::atomic_bool& bStopFlag, std::condition_variable& cv)
 {
-	exit = true;
+	CoutWriter writer;
 
-	if (s != EndOfFileString)
+	while (bStopFlag)
 	{
-		exit = false;
+		std::unique_lock<mutex> lock(threadMutex);
 
-		if (s == "{")
+		cv.wait(lock, [&stringQueue, &bStopFlag] { return !stringQueue.empty() || !bStopFlag; });
+
+		if (!stringQueue.empty())
 		{
-			cmd->PrintPool();
-			return ICommandHandlerPtr{ new DynamicCommandHandler(count_) };
-		}
-
-		cmd->PushPool(s);
-
-		if (cmd->GetPoolSize() == count_)
-		{
-			cmd->PrintPool();
+			writer.Print(move(stringQueue.front()));
+			stringQueue.pop();
 		}
 	}
-	else
-	{
-		cmd->PrintPool();
-	}
-
-	return nullptr;
 }
 
-/**
-*	Process command int the dynamic mode
-*/
-ICommandHandlerPtr DynamicCommandHandler::ProcessCommand(CommandsProcessor* cmd, const std::string& s, bool& exit)
+void FileWriterThr(std::queue<std::pair<std::string, long long>>& stringQueue, std::mutex& threadMutex, std::atomic_bool& bStopFlag,
+	int postfix, std::condition_variable& cv)
 {
-	exit = true;
+	FileWriter writer;
 
-	if(s == EndOfFileString)
-		return nullptr;
-
-	exit = false;
-
-	if (s == "{")
+	while (bStopFlag)
 	{
-		++openBraceCount_;
-	}
-	else
-	if (s == "}")
-	{
-		if (openBraceCount_ == 0)
+		std::unique_lock<mutex> lock(threadMutex);
+
+		cv.wait(lock, [&stringQueue, &bStopFlag] { return !stringQueue.empty() || !bStopFlag; });
+
+		if (!stringQueue.empty())
 		{
-			cmd->PrintPool();
-			return ICommandHandlerPtr{ new StaticCommandHandler(count_) };
+			auto p = move(stringQueue.front());
+			writer.SetTime(p.second, postfix);
+			writer.Print(p.first);
+			stringQueue.pop();
 		}
-
-		--openBraceCount_;
 	}
-	else
-	{
-		cmd->PushPool(s);
-	}
-
-	return nullptr;
 }
+} // namespace
+
 
 CommandsProcessor::CommandsProcessor(size_t count) : count_{ count }
 {
@@ -83,7 +59,11 @@ CommandsProcessor::CommandsProcessor(size_t count) : count_{ count }
 
 CommandsProcessor::~CommandsProcessor()
 {
-	stop_flag_ = false;
+	{
+		std::lock_guard<std::mutex> lock_cout(ThreadCoutMutex);
+		std::lock_guard<std::mutex> lock_file(ThreadFileMutex);
+		stop_flag_ = false;
+	}
 	cv_.notify_all();
 	cout_thr.join();
 	file_thr1.join();
@@ -116,6 +96,8 @@ void CommandsProcessor::PrintString(const std::string& s)
 		lock_guard<std::mutex> guard(ThreadFileMutex);
 		stringsQueueFile.push(pair(s, firstCmdTime_));
 	}
+
+	cv_.notify_all();
 }
 
 /**
@@ -143,3 +125,18 @@ void CommandsProcessor::PrintPool()
 		pool_.clear();
 	}
 }
+
+bool CommandsProcessor::ProcessCommand(const std::string& cmd)
+{
+	bool res;
+
+	ICommandHandlerPtr ptr = handler_->ProcessCommand(this, cmd, res);
+
+	if (ptr)
+	{
+		handler_ = std::move(ptr);
+	}
+
+	return !res;
+}
+

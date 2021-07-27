@@ -14,7 +14,7 @@ if (UNIX)
 endif()
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (bulk "main.cpp" "command.cpp" "thread.cpp")
+add_executable (bulk "main.cpp" "commands_processor.cpp" "command_handler.cpp")
 
 if (UNIX)
     target_link_libraries (bulk Threads::Threads)
